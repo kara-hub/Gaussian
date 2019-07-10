@@ -48,8 +48,13 @@ def gen_dataset(num_fields, img_size=1024, slice_dim=128):
         # save field matrix
         np.save('data/field_%d.npy' % n, img)
         
+        #overlap set to 50%
         overlap = slice_dim // 2
+        
+        #type of data generated (overlap or no overlap)
+        #creates 128*128 blocks with overlap (50%)
         new_split = np.array(split_overlap(img, slice_dim, overlap))
+        #creates unique 128*128 blocks (no overlap)
         no_ovr_split = np.array(split_overlap(img, slice_dim, 0))
 
         block_ct = 0
