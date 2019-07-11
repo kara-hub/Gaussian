@@ -63,19 +63,21 @@ def gen_dataset(num_fields, img_size=1024, slice_dim=128):
             np.save('data/real_ovr_%d_%d.npy' % (n, block_ct), arr)
             
             fourier_block = np.abs(np.fft.fftshift(np.fft.fft2(arr)))**2
-            fourier_block[(len(fourier_block) // 2) - 1][(len(fourier_block) // 2) - 1] = 1
+            #"center" pixel [64][64] dominates image set to 1
+            #fourier_block[len(fourier_block) // 2][len(fourier_block) // 2] = 1
             np.save('data/fft_ovr_%d_%d.npy'% (n, block_ct), fourier_block)
             
             #print(arr.shape)
         
+        block_ct = 0
         for arr in no_ovr_split:
             block_ct += 1
             np.save('data/real_no_%d_%d.npy' % (n, block_ct), arr)
             
             fourier_block = np.abs(np.fft.fftshift(np.fft.fft2(arr)))**2
             
-            #change to //2, no -1 [64][64], not [63][63]
-            fourier_block[(len(fourier_block) // 2) - 1][(len(fourier_block) // 2) - 1] = 1
+            #"center" pixel [64][64] dominates image set to 1
+            #fourier_block[len(fourier_block) // 2][len(fourier_block) // 2] = 1
             np.save('data/fft_no_%d_%d.npy'% (n, block_ct), fourier_block)
             
             #print(arr.shape)
